@@ -42,10 +42,10 @@ public class IQPuzzleProSolver {
         
     }
     
-    public static boolean bruteForceIt(Piece[] piece_arr, int k, Board board) {
-        if(k == piece_arr.length) {
-            return true;
-        }
+    public static void bruteForceIt(Piece[] piece_arr, int k, Board board) {
+        // if(k == piece_arr.length) {
+        //     return true;
+        // }
 
         int h = piece_arr[k].getHeight();
         int w = piece_arr[k].getWidth();
@@ -59,12 +59,22 @@ public class IQPuzzleProSolver {
             }
         }
 
-        //Kinda sus
-        //Reflect/rotate case
-
-        if(k == 0) {
-            return false;
+        
+        if(piece_arr[k].rotation_index < 4) {
+            bruteForceIt(piece_arr, k, board);
+        } else if (piece_arr[k].reflection_index < 1){
+            piece_arr[k].rotation_index = 0;
+            piece_arr[k].reflectPiece();
+            bruteForceIt(piece_arr, k, board);
         }
+
+        bruteForceIt(piece_arr, k-1, board);
+
+
+
+        // if(k == 0) {
+        //     return false;
+        // }
     }
 
     public static char getLetter(String block_row) {

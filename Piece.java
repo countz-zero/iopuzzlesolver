@@ -7,6 +7,8 @@ public class Piece {
     private int h = 0;
     private int row_coord = 0;
     private int col_coord = 0;
+    public int rotation_index = 0;
+    public int reflection_index = 0;
     //private ArrayList<ArrayList<String>> blockShape = new ArrayList<>();
     private ArrayList<ArrayList<String>> blockShape = new ArrayList<ArrayList<String>>();
     private int[][] blockShapeMatrix;
@@ -45,6 +47,7 @@ public class Piece {
     }
 
     public void rotatePiece90Deg() {
+        rotation_index++;
         int[][] newBlockShapeMatrix = new int[w][h];
         for (int i = 0; i < w; i++) {
             for (int j=0; j< h; j++) {
@@ -60,6 +63,7 @@ public class Piece {
     }
 
     public void reflectPiece() {
+        reflection_index++;
         int[][] newBlockShapeMatrix = new int[h][w];
         for (int i = 0; i < h; i++) {
             for (int j=0; j< w; j++) {
