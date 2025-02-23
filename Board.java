@@ -28,8 +28,10 @@ public class Board {
         piece.setColCoord(col);
     }
 
-    public void removePiece(Piece piece, int row, int col) {
+    public void removePiece(Piece piece) {
         int[][] piece_matrix = piece.getBlockShapeMatrix();
+        int row = piece.getRowCoord();
+        int col = piece.getColCoord();
         int h_piece = piece_matrix.length;
         int w_piece = piece_matrix[0].length;
 

@@ -42,24 +42,29 @@ public class IQPuzzleProSolver {
         
     }
     
-    public static boolean checkPieceOfAConfig(Piece[] piece_arr, int k, Board board) {
-        boolean fitted = false;
-
-        if (k >= piece_arr.length) {
-            return false;
+    public static boolean bruteForceIt(Piece[] piece_arr, int k, Board board) {
+        if(k == piece_arr.length) {
+            return true;
         }
-        
-        for(int i = 0; i < board.getHeight(); i++) {
-            for(int j = 0; j < board.getWidth(); j++) {
+
+        int h = piece_arr[k].getHeight();
+        int w = piece_arr[k].getWidth();
+
+        for(int i = 0; i < board.getHeight() - h + 1; i++) {
+            for(int j = 0; j < board.getWidth() - w + 1; j++) {
                 if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
                     board.addPiece(piece_arr[k], i, j);
-                    fitted = true;
-                    checkPieceOfAConfig(piece_arr, k+1, board);
+                    bruteForceIt(piece_arr, k+1, board);
                 }
             }
         }
 
-        return fitted;
+        //Kinda sus
+        //Reflect/rotate case
+
+        if(k == 0) {
+            return false;
+        }
     }
 
     public static char getLetter(String block_row) {
