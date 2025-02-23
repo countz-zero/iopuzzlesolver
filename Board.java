@@ -58,6 +58,13 @@ public class Board {
         return isFit;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     public void showBoardCheck() {
         System.out.println(Arrays.deepToString(boardMatrix));

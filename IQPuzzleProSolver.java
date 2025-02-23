@@ -34,14 +34,15 @@ public class IQPuzzleProSolver {
 
             } while (numOfPieces <= P && !block_row.equals(""));
         } 
-        
-        
-        input.close();
-    }
 
-    public static void getPiece(String[] piece_blocks) {
-        ;
-        //Menerjemahkan input ke kelas Piece
+        input.close();
+
+        //Algoritma Brute Force
+
+        for(int i = 0; i < piece_arr.length; i++) {
+
+        }
+
     }
 
     public static char getLetter(String block_row) {
@@ -54,4 +55,6 @@ public class IQPuzzleProSolver {
 
         return '\0'; // Return null character if no letter is found
     }
+
+    
 }
