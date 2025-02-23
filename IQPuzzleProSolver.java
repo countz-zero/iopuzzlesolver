@@ -1,8 +1,10 @@
 import java.util.Scanner;
-import java.util.Arrays;;
+import java.io.*;
+import java.util.Arrays;
 public class IQPuzzleProSolver {
-    public static void main (String[] args) {
-        Scanner input = new Scanner(System.in);
+    public static void main (String[] args) throws IOException {
+        File file = new File("./input.txt");
+        Scanner input = new Scanner(file);
 
         int M = Integer.parseInt(input.next());
         int N = Integer.parseInt(input.next());
@@ -38,14 +40,30 @@ public class IQPuzzleProSolver {
         input.close();
 
         //Algoritma Brute Force
-
+        bruteForceIt(piece_arr, 0, board);
         
+        if(board.checkBoardFull()) {
+            board.editBoardConfig(piece_arr);
+            board.showBoardConfig();
+        } else {
+            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
+            System.out.println(piece_arr[0].getRowCoord());
+            System.out.println(piece_arr[0].getColCoord());
+            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
+            System.out.println(piece_arr[1].getRowCoord());
+            System.out.println(piece_arr[1].getColCoord());
+            System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
+            System.out.println(piece_arr[1].getRowCoord());
+            System.out.println(piece_arr[1].getColCoord());
+            System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
+            System.out.println("Tidak ada solusi yg mungkin");
+        }
     }
     
     public static void bruteForceIt(Piece[] piece_arr, int k, Board board) {
-        // if(k == piece_arr.length) {
-        //     return true;
-        // }
+        if(k == piece_arr.length) {
+            return;
+        }
 
         int h = piece_arr[k].getHeight();
         int w = piece_arr[k].getWidth();
@@ -55,12 +73,14 @@ public class IQPuzzleProSolver {
                 if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
                     board.addPiece(piece_arr[k], i, j);
                     bruteForceIt(piece_arr, k+1, board);
+                    board.removePiece(piece_arr[k]);
                 }
             }
         }
 
-        
+
         if(piece_arr[k].rotation_index < 4) {
+            piece_arr[k].rotatePiece90Deg();
             bruteForceIt(piece_arr, k, board);
         } else if (piece_arr[k].reflection_index < 1){
             piece_arr[k].rotation_index = 0;
@@ -68,13 +88,9 @@ public class IQPuzzleProSolver {
             bruteForceIt(piece_arr, k, board);
         }
 
-        bruteForceIt(piece_arr, k-1, board);
-
-
-
-        // if(k == 0) {
-        //     return false;
-        // }
+        if (k == 0 && piece_arr[k].reflection_index == 1 && piece_arr[k].rotation_index == 4) {
+            return;
+        }
     }
 
     public static char getLetter(String block_row) {

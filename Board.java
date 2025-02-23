@@ -42,11 +42,23 @@ public class Board {
         }
     }
 
+    public boolean checkFitPieceOnSize(Piece piece) {
+        if (piece.getHeight() > height || piece.getWidth() > width) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public boolean checkFitPieceAtPlace(Piece piece, int row, int col) {
         boolean isFit = true;
         int[][] piece_matrix = piece.getBlockShapeMatrix();
         int h_piece = piece_matrix.length;
         int w_piece = piece_matrix[0].length;
+
+        if (!checkFitPieceOnSize(piece)) {
+            return false;
+        }
 
         outerloop : for(int i = 0; i < h_piece; i++) {
             for(int j = 0; j < w_piece; j++) {
@@ -56,8 +68,21 @@ public class Board {
                 }
             }
         }
-
+        
         return isFit;
+    }
+
+    public boolean checkBoardFull() {
+        boolean isFull = true;
+        for(int i = 0; i < boardMatrix.length; i++) {
+            for(int j = 0; j < boardMatrix[0].length; j++) {
+                if(boardMatrix[i][j] == 0) {
+                    isFull = false;
+                }
+            }
+        }
+
+        return isFull;
     }
 
     public int getWidth() {
@@ -72,7 +97,28 @@ public class Board {
         System.out.println(Arrays.deepToString(boardMatrix));
     }
 
+    public void editBoardConfig(Piece[] piece_arr) {
+        for (int k = 0; k < piece_arr.length; k++) {
+            int[][] matrix = piece_arr[k].getBlockShapeMatrix();
+            int row = piece_arr[k].getRowCoord();
+            int col = piece_arr[k].getColCoord();
+
+            for(int i = 0; i < row; i++) {
+                for(int j = 0; j < col; j++) {
+                    if(matrix[i][j] == 1) {
+                        boardConfig[row + i][col + j] = piece_arr[k].getSymbol();
+                    }
+                }
+            }
+        }
+    }
+
     public void showBoardConfig() {
-        System.out.println(Arrays.deepToString(boardConfig));
+        for(int i = 0; i < boardConfig.length; i++) {
+            for(int j = 0; j < boardConfig[0].length; j++) {
+                System.out.print(boardConfig[i][j]);
+            }
+                System.out.print("\n");
+        }
     }
 }
