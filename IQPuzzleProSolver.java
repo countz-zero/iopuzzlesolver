@@ -12,7 +12,6 @@ public class IQPuzzleProSolver {
         input.nextLine();
 
         Board board = new Board(M, N);
-        board.showBoardCheck();
 
         Piece[] piece_arr = new Piece[P];
 
@@ -43,19 +42,28 @@ public class IQPuzzleProSolver {
         bruteForceIt(piece_arr, 0, board);
         
         if(board.checkBoardFull()) {
+            board.showBoardMatrix();
             board.editBoardConfig(piece_arr);
             board.showBoardConfig();
-        } else {
             System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
             System.out.println(piece_arr[0].getRowCoord());
             System.out.println(piece_arr[0].getColCoord());
-            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
-            System.out.println(piece_arr[1].getRowCoord());
-            System.out.println(piece_arr[1].getColCoord());
             System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
             System.out.println(piece_arr[1].getRowCoord());
             System.out.println(piece_arr[1].getColCoord());
             System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
+            System.out.println(piece_arr[2].getRowCoord());
+            System.out.println(piece_arr[2].getColCoord());
+        } else {
+            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
+            System.out.println(piece_arr[0].getRowCoord());
+            System.out.println(piece_arr[0].getColCoord());
+            System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
+            System.out.println(piece_arr[1].getRowCoord());
+            System.out.println(piece_arr[1].getColCoord());
+            System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
+            System.out.println(piece_arr[2].getRowCoord());
+            System.out.println(piece_arr[2].getColCoord());
             System.out.println("Tidak ada solusi yg mungkin");
         }
     }
@@ -73,7 +81,7 @@ public class IQPuzzleProSolver {
                 if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
                     board.addPiece(piece_arr[k], i, j);
                     bruteForceIt(piece_arr, k+1, board);
-                    board.removePiece(piece_arr[k]);
+                    //board.removePiece(piece_arr[k]);
                 }
             }
         }

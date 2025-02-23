@@ -93,7 +93,7 @@ public class Board {
         return height;
     }
 
-    public void showBoardCheck() {
+    public void showBoardMatrix() {
         System.out.println(Arrays.deepToString(boardMatrix));
     }
 
