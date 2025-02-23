@@ -39,10 +39,27 @@ public class IQPuzzleProSolver {
 
         //Algoritma Brute Force
 
-        for(int i = 0; i < piece_arr.length; i++) {
+        
+    }
+    
+    public static boolean checkPieceOfAConfig(Piece[] piece_arr, int k, Board board) {
+        boolean fitted = false;
 
+        if (k >= piece_arr.length) {
+            return false;
+        }
+        
+        for(int i = 0; i < board.getHeight(); i++) {
+            for(int j = 0; j < board.getWidth(); j++) {
+                if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
+                    board.addPiece(piece_arr[k], i, j);
+                    fitted = true;
+                    checkPieceOfAConfig(piece_arr, k+1, board);
+                }
+            }
         }
 
+        return fitted;
     }
 
     public static char getLetter(String block_row) {

@@ -13,18 +13,19 @@ public class Board {
         height = h;
     }
 
-    public void addPiece(Piece piece, int row, int col) {
-        if(checkFitPieceAtPlace(piece, row, col)) {
-            int[][] piece_matrix = piece.getBlockShapeMatrix();
-            int h_piece = piece_matrix.length;
-            int w_piece = piece_matrix[0].length;
+    public void addPiece(Piece piece, int row, int col) { //Assumes position is valid
+        int[][] piece_matrix = piece.getBlockShapeMatrix();
+        int h_piece = piece_matrix.length;
+        int w_piece = piece_matrix[0].length;
 
-            for(int i = 0; i < h_piece; i++) {
-                for(int j = 0; j < w_piece; j++) {
-                    boardMatrix[row + i][col + j] += piece_matrix[i][j];
+        for(int i = 0; i < h_piece; i++) {
+            for(int j = 0; j < w_piece; j++) {
+                boardMatrix[row + i][col + j] += piece_matrix[i][j];
             }
         }
-        }
+        
+        piece.setRowCoord(row);
+        piece.setColCoord(col);
     }
 
     public void removePiece(Piece piece, int row, int col) {
@@ -38,7 +39,6 @@ public class Board {
             }
         }
     }
-
 
     public boolean checkFitPieceAtPlace(Piece piece, int row, int col) {
         boolean isFit = true;

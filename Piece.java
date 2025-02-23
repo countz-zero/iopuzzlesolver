@@ -5,8 +5,8 @@ public class Piece {
     private char symbol;
     private int w = 0;
     private int h = 0;
-    private int x_coord = 0;
-    private int y_coord = 0;
+    private int row_coord = 0;
+    private int col_coord = 0;
     //private ArrayList<ArrayList<String>> blockShape = new ArrayList<>();
     private ArrayList<ArrayList<String>> blockShape = new ArrayList<ArrayList<String>>();
     private int[][] blockShapeMatrix;
@@ -86,20 +86,20 @@ public class Piece {
         return h;
     }
 
-    public int getXCoord() {
-        return x_coord;
+    public int getRowCoord() {
+        return row_coord;
     }
 
-    public int getYCoord() {
-        return y_coord;
+    public int getColCoord() {
+        return col_coord;
     }
 
-    public void setXCoord(int x) {
-        x_coord = x;
+    public void setRowCoord(int x) {
+        row_coord = x;
     }
 
-    public void setYCoord(int y) {
-        y_coord = y;
+    public void setColCoord(int y) {
+        col_coord = y;
     }
 
 
