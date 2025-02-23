@@ -35,6 +35,7 @@ public class IQPuzzleProSolver {
             } while (numOfPieces <= P && !block_row.equals(""));
         } 
         
+        
         input.close();
     }
 

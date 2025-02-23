@@ -5,6 +5,8 @@ public class Piece {
     private char symbol;
     private int w = 0;
     private int h = 0;
+    private int x_coord = 0;
+    private int y_coord = 0;
     //private ArrayList<ArrayList<String>> blockShape = new ArrayList<>();
     private ArrayList<ArrayList<String>> blockShape = new ArrayList<ArrayList<String>>();
     private int[][] blockShapeMatrix;
@@ -83,6 +85,23 @@ public class Piece {
     public int getHeight() {
         return h;
     }
+
+    public int getXCoord() {
+        return x_coord;
+    }
+
+    public int getYCoord() {
+        return y_coord;
+    }
+
+    public void setXCoord(int x) {
+        x_coord = x;
+    }
+
+    public void setYCoord(int y) {
+        y_coord = y;
+    }
+
 
     public void printShape() {
         for(int i = 0; i < blockShape.size(); i++){
