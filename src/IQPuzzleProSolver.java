@@ -1,9 +1,10 @@
+package src;
 import java.util.Scanner;
 import java.io.*;
 public class IQPuzzleProSolver {
     public static void main (String[] args) throws IOException {
-        File file = new File("./input.txt");
-        File outFile = new File("output.txt");
+        File file = new File("../test/input.txt");
+        File outFile = new File("../test/output.txt");
         Scanner input = new Scanner(file);
 
         int M = Integer.parseInt(input.next());
