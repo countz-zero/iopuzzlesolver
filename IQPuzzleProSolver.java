@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.io.*;
-import java.util.Arrays;
 public class IQPuzzleProSolver {
     public static void main (String[] args) throws IOException {
         File file = new File("./input.txt");
@@ -67,63 +66,69 @@ public class IQPuzzleProSolver {
                 input2.close();
             } 
 
-            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
-            System.out.println(piece_arr[0].getRowCoord());
-            System.out.println(piece_arr[0].getColCoord());
-            System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
-            System.out.println(piece_arr[1].getRowCoord());
-            System.out.println(piece_arr[1].getColCoord());
-            System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
-            System.out.println(piece_arr[2].getRowCoord());
-            System.out.println(piece_arr[2].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[0].getRowCoord());
+            // System.out.println(piece_arr[0].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[1].getRowCoord());
+            // System.out.println(piece_arr[1].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[2].getRowCoord());
+            // System.out.println(piece_arr[2].getColCoord());
         } else {
-            System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
-            System.out.println(piece_arr[0].getRowCoord());
-            System.out.println(piece_arr[0].getColCoord());
-            System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
-            System.out.println(piece_arr[1].getRowCoord());
-            System.out.println(piece_arr[1].getColCoord());
-            System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
-            System.out.println(piece_arr[2].getRowCoord());
-            System.out.println(piece_arr[2].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[0].getRowCoord());
+            // System.out.println(piece_arr[0].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[1].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[1].getRowCoord());
+            // System.out.println(piece_arr[1].getColCoord());
+            // System.out.println(Arrays.deepToString(piece_arr[2].getBlockShapeMatrix()));
+            // System.out.println(piece_arr[2].getRowCoord());
+            // System.out.println(piece_arr[2].getColCoord());
             System.out.println("Tidak ada solusi yg mungkin");
         }
     }
     
-    public static void bruteForceIt(Piece[] piece_arr, int k, Board board) {
+    public static boolean bruteForceIt(Piece[] piece_arr, int k, Board board) {
         if(k == piece_arr.length) {
-            return;
+            return true;
         }
 
-        int h = piece_arr[k].getHeight();
-        int w = piece_arr[k].getWidth();
+        Piece piece = piece_arr[k];
 
-        for(int i = 0; i < board.getHeight() - h + 1; i++) {
-            for(int j = 0; j < board.getWidth() - w + 1; j++) {
-                board.cases++;
-                if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
-                    board.addPiece(piece_arr[k], i, j);
-                    bruteForceIt(piece_arr, k+1, board);
-                    //board.removePiece(piece_arr[k]);
+        int h = piece.getHeight();
+        int w = piece.getWidth();
+
+        for(int row = 0; row < board.getHeight(); row++) {
+            for(int col = 0; col < board.getWidth(); col++) {
+                for(int r = 0; r < 4; r++) {
+                    board.cases++;
+                    piece.rotatePiece90Deg();
+                    if(board.checkFitPieceAtPlace(piece, row, col)) {
+                        board.addPiece(piece, row, col);
+                        if(bruteForceIt(piece_arr, k+1, board)){
+                            return true;
+                        }
+                        board.removePiece(piece);
+                    }
+                }
+
+                piece.reflectPiece();
+                for(int r = 0; r < 4; r++) {
+                    board.cases++;
+                    piece.rotatePiece90Deg();
+                    if(board.checkFitPieceAtPlace(piece, row, col)) {
+                        board.addPiece(piece, row, col);
+                        if(bruteForceIt(piece_arr, k+1, board)){
+                            return true;
+                        }
+                        board.removePiece(piece);
+                    }
                 }
             }
         }
 
-
-        if(piece_arr[k].rotation_index < 4) {
-            piece_arr[k].rotatePiece90Deg();
-            bruteForceIt(piece_arr, k, board);
-        } else if (piece_arr[k].reflection_index < 1){
-            piece_arr[k].rotation_index = 0;
-            piece_arr[k].reflectPiece();
-            bruteForceIt(piece_arr, k, board);
-        }
-
-        //Yboard.removePiece(piece_arr[k]);
-
-        if (k == 0 && piece_arr[k].reflection_index == 1 && piece_arr[k].rotation_index == 4) {
-            return;
-        }
+        return false;
     }
 
     public static char getLetter(String block_row) {

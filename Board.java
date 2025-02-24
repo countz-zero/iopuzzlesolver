@@ -53,25 +53,18 @@ public class Board {
     }
 
     public boolean checkFitPieceAtPlace(Piece piece, int row, int col) {
-        boolean isFit = true;
-        int[][] piece_matrix = piece.getBlockShapeMatrix();
-        int h_piece = piece_matrix.length;
-        int w_piece = piece_matrix[0].length;
-
-        if (!checkFitPieceOnSize(piece)) {
-            return false;
-        }
-
-        outerloop : for(int i = 0; i < h_piece; i++) {
-            for(int j = 0; j < w_piece; j++) {
-                if(boardMatrix[row + i][col + j] == 1 && piece_matrix[i][j] == 1) {
-                    isFit = false;
-                    break outerloop;
+        int[][] shape = piece.getBlockShapeMatrix();
+        for(int i = 0; i < shape.length; i++) {
+            for(int j = 0; j < shape[0].length; j++) {
+                if(shape[i][j] == 1) {
+                    if(row + i >= width || col + j >= height || boardMatrix[row + i][col + j] != 0) {
+                        return false;
+                    }
                 }
             }
         }
-        
-        return isFit;
+
+        return true;
     }
 
     public boolean checkBoardFull() {
