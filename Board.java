@@ -6,6 +6,7 @@ public class Board {
     private char boardConfig[][];
     private int height;
     private int width;
+    public long cases = 0;
 
     public Board(int h, int w) {
         boardMatrix = new int[h][w];
@@ -77,7 +78,7 @@ public class Board {
         boolean isFull = true;
         for(int i = 0; i < boardMatrix.length; i++) {
             for(int j = 0; j < boardMatrix[0].length; j++) {
-                if(boardMatrix[i][j] == 0) {
+                if(boardMatrix[i][j] != 1) {
                     isFull = false;
                 }
             }
@@ -114,14 +115,26 @@ public class Board {
         }
     }
 
-    public void showBoardConfig(FileWriter file_out) throws IOException{
+    // public void showBoardConfig(FileWriter file_out) throws IOException{
+    //     for(int i = 0; i < boardConfig.length; i++) {
+    //         for(int j = 0; j < boardConfig[0].length; j++) {
+    //             file_out.write(boardConfig[i][j]);
+    //         }
+    //             file_out.write("\n");
+    //     }
+
+    //     file_out.close();
+    // }
+
+    public String showBoardConfig() {
+        String out = "";
         for(int i = 0; i < boardConfig.length; i++) {
             for(int j = 0; j < boardConfig[0].length; j++) {
-                file_out.write(boardConfig[i][j]);
+                out += boardConfig[i][j];
             }
-                file_out.write("\n");
+                out += "\n";
         }
 
-        file_out.close();
+        return out;
     }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class IQPuzzleProSolver {
     public static void main (String[] args) throws IOException {
         File file = new File("./input.txt");
-        //File file_out = new File("output.txt");
+        File outFile = new File("output.txt");
         Scanner input = new Scanner(file);
 
         int M = Integer.parseInt(input.next());
@@ -40,13 +40,33 @@ public class IQPuzzleProSolver {
         input.close();
 
         //Algoritma Brute Force
+        long start = System.currentTimeMillis();
         bruteForceIt(piece_arr, 0, board);
-        FileWriter file_out = new FileWriter("output.txt");
+        long time = System.currentTimeMillis() - start;
+        FileWriter fWriter = new FileWriter(outFile);
+        PrintWriter pWriter = new PrintWriter(fWriter);
         
         if(board.checkBoardFull()) {
             board.showBoardMatrix();
             board.editBoardConfig(piece_arr);
-            board.showBoardConfig(file_out);
+            String output = board.showBoardConfig();
+            System.out.println(output);
+
+            System.out.println("Waktu yang dibutuhkan : ");
+            System.out.println(time + " ms");
+            System.out.println("Banyak kasus yang ditinjau :");
+            System.out.println(board.cases);
+            System.out.println("Apakah Anda ingin menyimpan solusi?");
+            Scanner input2 = new Scanner(System.in);
+            String toSave = input2.nextLine();
+            if (toSave.equals("Y")) {
+                System.out.println("Solusi tersimpan!");
+                pWriter.println(output);
+                pWriter.close();
+                fWriter.close();
+                input2.close();
+            } 
+
             System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
             System.out.println(piece_arr[0].getRowCoord());
             System.out.println(piece_arr[0].getColCoord());
@@ -80,6 +100,7 @@ public class IQPuzzleProSolver {
 
         for(int i = 0; i < board.getHeight() - h + 1; i++) {
             for(int j = 0; j < board.getWidth() - w + 1; j++) {
+                board.cases++;
                 if(board.checkFitPieceAtPlace(piece_arr[k], i, j)) {
                     board.addPiece(piece_arr[k], i, j);
                     bruteForceIt(piece_arr, k+1, board);
@@ -97,6 +118,8 @@ public class IQPuzzleProSolver {
             piece_arr[k].reflectPiece();
             bruteForceIt(piece_arr, k, board);
         }
+
+        //Yboard.removePiece(piece_arr[k]);
 
         if (k == 0 && piece_arr[k].reflection_index == 1 && piece_arr[k].rotation_index == 4) {
             return;
