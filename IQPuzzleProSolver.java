@@ -4,6 +4,7 @@ import java.util.Arrays;
 public class IQPuzzleProSolver {
     public static void main (String[] args) throws IOException {
         File file = new File("./input.txt");
+        //File file_out = new File("output.txt");
         Scanner input = new Scanner(file);
 
         int M = Integer.parseInt(input.next());
@@ -40,11 +41,12 @@ public class IQPuzzleProSolver {
 
         //Algoritma Brute Force
         bruteForceIt(piece_arr, 0, board);
+        FileWriter file_out = new FileWriter("output.txt");
         
         if(board.checkBoardFull()) {
             board.showBoardMatrix();
             board.editBoardConfig(piece_arr);
-            board.showBoardConfig();
+            board.showBoardConfig(file_out);
             System.out.println(Arrays.deepToString(piece_arr[0].getBlockShapeMatrix()));
             System.out.println(piece_arr[0].getRowCoord());
             System.out.println(piece_arr[0].getColCoord());

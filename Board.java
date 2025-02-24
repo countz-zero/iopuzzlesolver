@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.io.*;
 
 public class Board {
     private int boardMatrix[][];
@@ -103,8 +104,8 @@ public class Board {
             int row = piece_arr[k].getRowCoord();
             int col = piece_arr[k].getColCoord();
 
-            for(int i = 0; i < row; i++) {
-                for(int j = 0; j < col; j++) {
+            for(int i = 0; i < matrix.length; i++) {
+                for(int j = 0; j < matrix[0].length; j++) {
                     if(matrix[i][j] == 1) {
                         boardConfig[row + i][col + j] = piece_arr[k].getSymbol();
                     }
@@ -113,12 +114,14 @@ public class Board {
         }
     }
 
-    public void showBoardConfig() {
+    public void showBoardConfig(FileWriter file_out) throws IOException{
         for(int i = 0; i < boardConfig.length; i++) {
             for(int j = 0; j < boardConfig[0].length; j++) {
-                System.out.print(boardConfig[i][j]);
+                file_out.write(boardConfig[i][j]);
             }
-                System.out.print("\n");
+                file_out.write("\n");
         }
+
+        file_out.close();
     }
 }
